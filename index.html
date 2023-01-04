@@ -225,7 +225,7 @@
 
                 objOverlays = {};
                 ctrlLayers = L.control.layers(objBasemaps,objOverlays).addTo(mymap);
-                mymap.addLayer(lyrImagery);
+                mymap.addLayer(lyrTopo);
 
         //   *********** her oprettes ekstra lag **********          
                 ctlSidebar = L.control.sidebar('sidebardiv').addTo(mymap);
@@ -270,14 +270,29 @@
 
 
         
-        lyrVLBstrk = L.geoJSON.ajax('data/RandersFjord4.geojson',{onEachFeature:processVLBstrk,  style:{   
-            weight: 2,
-    opacity: 1,
-    color: 'red',
-    dashArray: '3',
-    fillOpacity: 0.5}
-    , filter:filterVLBstrk}).addTo(mymap);
-
+        lyrVLBstrk = L.geoJSON.ajax('data/RandersFjord5.geojson',{onEachFeature:processVLBstrk,  
+            style: function(feature) {
+                        if (feature.properties.status === "Aktivt") {
+                            return {
+                                color: "green",
+                                weight: 1
+                            };
+                        }
+                        if (feature.properties.status === "Nedlagt") {
+                            return {
+                                color: "red",
+                                weight: 2
+                            };
+                        }
+                        if (feature.properties.NAME === "COUNTY3") {
+                            return {
+                                color: "#ce06cb",
+                                weight: 3
+                            };
+                        }
+                    },
+                }).addTo(mymap);
+        
 
         
         lyrProjekter = L.geoJSON.ajax('data/Vådområder140922.geojson', {pointToLayer:returnProjekterMarker, onEachFeature:processProjekter, filter:filterProjekter}).addTo(mymap);
@@ -434,7 +449,7 @@
                         lyr.bindPopup(	
                     "<h4><strong><center>"+"Pumpelag" +"</center></strong></h4>"+
                     "<h5><strong>Navn.: </strong>"+att.navn+"</h5>"+
-                    "<h5><strong>Areal: </strong>"+att.Areal+"</h5>"+
+                    "<h5><strong>Areal: </strong>"+att.Areal+" ha"+"</h5>"+
                     "<h5><strong>Status: </strong>"+att.status+"</h5>"+
                     "<h5><strong>Læs mere: </strong>"+att.Forklaring+"</h5>"+
                     "<h5><strong>Hjemmeside: </strong>"+att.Hjemmeside+"</h5>"
