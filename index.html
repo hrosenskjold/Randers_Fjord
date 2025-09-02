@@ -36,10 +36,24 @@
             }
           },
           onEachFeature: function (feature, layer) {
-            var props = feature.properties || {};
-            var txt = "<b>Randers5</b>";
-            txt += "<br>Status: " + (props.status || "ukendt");
-            layer.bindPopup(txt);
+            var att = feature.properties || {};
+
+            // Popup med tabel
+            var popupContent =
+              "<div style='min-width:220px;'>" +
+                "<h4 style='text-align:center; margin:0 0 5px 0;'><strong>Pumpelag</strong></h4>" +
+                "<table style='width:100%; border-collapse:collapse;'>" +
+                  "<tr><td><strong>Navn:</strong></td><td>" + (att.navn || "Ukendt") + "</td></tr>" +
+                  "<tr><td><strong>Areal:</strong></td><td>" + (att.Areal || "?") + " ha</td></tr>" +
+                  "<tr><td><strong>Status:</strong></td><td>" + (att.status || "Ingen data") + "</td></tr>" +
+                  "<tr><td><strong>Læs mere:</strong></td><td>" +
+                    "<a href='" + (att.Forklaring || "#") + "' target='_blank'>" +
+                      (att.navn || "Link") +
+                    "</a></td></tr>" +
+                "</table>" +
+              "</div>";
+
+            layer.bindPopup(popupContent);
           }
         }).addTo(map);
 
