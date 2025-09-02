@@ -24,7 +24,7 @@
     }).addTo(map);
 
     // Indlæs GeoJSON med fetch
-    fetch("data/randersfjord5.geojson")
+    fetch("data/RandersFjord5.geojson")
       .then(response => response.json())
       .then(data => {
         var randersLayer = L.geoJSON(data, {
