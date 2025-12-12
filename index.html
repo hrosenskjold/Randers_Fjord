@@ -30,9 +30,9 @@
         var randersLayer = L.geoJSON(data, {
           style: function (feature) {
             if (feature.properties && feature.properties.status === "Aktivt") {
-              return { color: "green", weight: 2, fillOpacity: 0.3 };
-            } else {
               return { color: "red", weight: 2, fillOpacity: 0.3 };
+            } else {
+              return { color: "green", weight: 2, fillOpacity: 0.3 };
             }
           },
           onEachFeature: function (feature, layer) {
